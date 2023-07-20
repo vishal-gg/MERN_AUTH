@@ -10,7 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
-    <>
+    <div>
       <Header />
       <Routes>
             <Route index={true} element={<HomeScreen />} />
@@ -23,7 +23,7 @@ function App() {
             </Route>
             <Route path='/*' element={<h1>Not Found - {window.location.pathname}</h1>} />
       </Routes>
-    </>
+    </div>
 
   )
 }
