@@ -14,14 +14,14 @@ const initialState: StateType = {
 export const register = createAsyncThunk(
   'auth/register',
   async ({name, email, password }: registerPayload) => {
-    const {data} = await axios.post<ApiResponse>('/api/users', {name, email, password });
+    const {data} = await axios.post<ApiResponse>('https://mern-auth-serverside.vercel.app/api/users', {name, email, password });
     return data;
   }
 );
 export const signIn = createAsyncThunk(
   'auth/signIn',
   async ({ email, password }: SignInPayload) => {
-    const response = await axios.post<ApiResponse>('/api/users/auth', { email, password });
+    const response = await axios.post<ApiResponse>('https://mern-auth-serverside.vercel.app/api/users/auth', { email, password });
     return response.data;
   }
 );
@@ -29,7 +29,7 @@ export const signIn = createAsyncThunk(
 export const logout = createAsyncThunk(
     'auth/logout',
     async () => {
-      const {data} = await axios.post('/api/users/logout');
+      const {data} = await axios.post('https://mern-auth-serverside.vercel.app/api/users/logout');
       return data;
     }
   );
@@ -37,7 +37,7 @@ export const logout = createAsyncThunk(
 export const deleteAccount = createAsyncThunk(
     'auth/delete-account',
     async (id: string) => {
-      const {data} = await axios.delete(`/api/users/${id}`);
+      const {data} = await axios.delete(`https://mern-auth-serverside.vercel.app/api/users/${id}`);
       return data;
     }
   );
