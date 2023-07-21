@@ -7,10 +7,12 @@ import RegisterScreen from './screens/RegisterScreen'
 import PrivateComp from './components/PrivateComp'
 import ProfileScreen from './screens/ProfileScreen'
 import ProtectedRoute from './components/ProtectedRoute'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
     <div>
+      <Toaster />
       <Header />
       <Routes>
             <Route index={true} element={<HomeScreen />} />

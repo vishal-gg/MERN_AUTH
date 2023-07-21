@@ -14,31 +14,47 @@ const initialState: StateType = {
 export const register = createAsyncThunk(
   'auth/register',
   async ({name, email, password }: registerPayload) => {
-    const {data} = await axios.post<ApiResponse>('https://mern-auth-serverside.vercel.app/api/users', {name, email, password });
-    return data;
+    try {
+      const {data} = await axios.post<ApiResponse>('https://mern-auth-serverside.vercel.app/api/users', {name, email, password });
+      return data;
+    } catch (err:any) {
+      throw new Error(err.response.data.error)
+    }
   }
 );
 export const signIn = createAsyncThunk(
   'auth/signIn',
   async ({ email, password }: SignInPayload) => {
-    const response = await axios.post<ApiResponse>('https://mern-auth-serverside.vercel.app/api/users/auth', { email, password });
-    return response.data;
+    try {
+      const {data} = await axios.post<ApiResponse>('https://mern-auth-serverside.vercel.app/api/users/auth', { email, password });
+      return data;
+    } catch (err:any) {
+      throw new Error(err.response.data.error)
+    }
   }
 );
 
 export const logout = createAsyncThunk(
     'auth/logout',
     async () => {
-      const {data} = await axios.post('https://mern-auth-serverside.vercel.app/api/users/logout');
-      return data;
+      try {
+        const {data} = await axios.post('https://mern-auth-serverside.vercel.app/api/users/logout');
+        return data;
+      } catch (err:any) {
+        throw new Error(err.response.data.error)
+      }
     }
   );
 
 export const deleteAccount = createAsyncThunk(
     'auth/delete-account',
     async (id: string) => {
-      const {data} = await axios.delete(`https://mern-auth-serverside.vercel.app/api/users/${id}`);
-      return data;
+     try {
+       const {data} = await axios.delete(`https://mern-auth-serverside.vercel.app/api/users/${id}`);
+       return data;
+     } catch (err:any) {
+       throw new Error(err.response.data.error)    
+     }
     }
   );
 

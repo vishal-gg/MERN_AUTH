@@ -1,26 +1,31 @@
 import { Outlet, NavLink, Link } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../types/storeType";
 import { deleteAccount, logout } from "../store/features/asynOperation/authSlice";
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { Toaster, toast } from "react-hot-toast";
 
 const Header = () => {
-  const {userInfo} = useAppSelector((state) => state.auth)
+  const {userInfo, loading, error} = useAppSelector((state) => state.auth)
   const dispatch = useAppDispatch()
   const [toggleMenu, setToggleMenu] = useState(false);
 
-  const handleAccountDeletion = () => {
+  const handleAccountDeletion = async () => {
     const confirmation = confirm('Are you sure you want to delete your account?')
     if(confirmation && userInfo !== null) {
-      dispatch(deleteAccount(userInfo._id))
-      .then(()=>toast.success('Account deleted successfully'))
+      const deletingAcc = await dispatch(deleteAccount(userInfo._id))
+      deletingAcc.payload.message && toast.success(deletingAcc.payload.message)
     }
   }
-  const handleLogout = () => {
-    dispatch(logout())
-    .then(() => toast.success('Logged out'))
-    .catch(() => toast.error('Failed!'))
+  const handleLogout = async () => {
+    const loggingOut = await dispatch(logout())
+    loggingOut.payload.message && toast.success(loggingOut.payload.message)
   }
+
+  useEffect(()=> {
+    loading ? toast.loading('Loading..') : toast.dismiss();
+    error && toast.error(error)
+    return () => toast.dismiss()
+  }, [loading, error])
 
   return (
     <div className="flex justify-between items-center bg-gray-800 h-16 px-5 fixed w-full">
