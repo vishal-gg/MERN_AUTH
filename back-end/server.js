@@ -16,7 +16,7 @@ app.use(cookieParser())
 app.use(cors())
 
 app.get("/", (req, res) => {
-    res.send('server is running')
+    res.send('prashant is live')
 });
 
 app.use('/api/users', userRoutes)
